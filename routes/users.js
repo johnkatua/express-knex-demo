@@ -83,6 +83,24 @@ usersRouter.route('/whereBetween')
     res.json({ users });
   });
 
+// joining two tables with inner join
+usersRouter.route('/joinWithProfiles')
+  .get(async (req, res) => {
+    const users = await knex('users')
+      .join('profiles', 'users.id', '=', 'profiles.user_id')
+      .select('users.first_name', 'profiles.email')
+    res.json({ users });
+  });
+
+// left join
+usersRouter.route('/leftJoin')
+  .get(async (req, res) => {
+    const users = await knex('users')
+      .leftOuterJoin('orders', 'users.id', '=', 'orders.user_id')
+      .select('users.id', 'users.first_name', 'users.last_name', 'orders.id AS order')
+    res.json({ users })
+  });
+
 
 
 module.exports = usersRouter;
