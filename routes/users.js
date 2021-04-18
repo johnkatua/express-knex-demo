@@ -51,4 +51,14 @@ usersRouter.route('/orderBy/:order')
     res.json({ users })
   });
 
+// fetch first_name and age in descending order
+usersRouter.route('/orderBy/:column/:order')
+  .get(async (req, res) => {
+    const {column, order} = req.params;
+    const users = await knex('users')
+      .select('first_name', 'age')
+      .orderBy(column, order)
+    res.json({ users })
+  });
+
 module.exports = usersRouter;
