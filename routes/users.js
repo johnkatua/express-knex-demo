@@ -3,11 +3,10 @@ const knex = require('../config/knex');
 const usersRouter = express.Router();
 
 // get users first_name and age
-usersRouter.route('/users')
+usersRouter.route('/certainFields')
   .get(async (req, res) => {
-    const users = await knex
+    const users = await knex('users')
       .select('first_name', 'age')
-      .from('users')
     res.json({ users });
   });
 
@@ -20,10 +19,26 @@ usersRouter.route('/whereIn')
   })
 
 // get all users
-usersRouter.route('/all')
+usersRouter.route('/users')
   .get(async (req, res) => {
     const users = await knex('users')
     res.json({ users });
-  })
+  });
+
+// fetch data using aliases
+usersRouter.route('/aliases')
+  .get(async (req, res) => {
+    const users = await knex('users')
+      .select('first_name AS name')
+    res.json({ users });
+  });
+
+// fetch distinct first_name from the database
+usersRouter.route('/distinct')
+  .get(async (req, res) => {
+    const users = await knex('users')
+      .distinct('first_name')
+    res.json({ users });
+  });
 
 module.exports = usersRouter;
