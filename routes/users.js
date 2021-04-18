@@ -2,11 +2,11 @@ const express = require('express');
 const knex = require('../config/knex');
 const usersRouter = express.Router();
 
-// get users data
+// get users first_name and age
 usersRouter.route('/users')
   .get(async (req, res) => {
     const users = await knex
-      .select('first_name', 'last_name', 'age', 'position')
+      .select('first_name', 'age')
       .from('users')
     res.json({ users });
   });
