@@ -41,4 +41,14 @@ usersRouter.route('/distinct')
     res.json({ users });
   });
 
+// fetch last_name and age in ascending order
+usersRouter.route('/orderBy/:order')
+  .get(async (req, res) => {
+    const { order } = req.params;
+    const users = await knex('users')
+      .select('last_name', 'age')
+      .orderBy(order)
+    res.json({ users })
+  });
+
 module.exports = usersRouter;
