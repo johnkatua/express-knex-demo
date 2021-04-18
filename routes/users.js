@@ -10,13 +10,6 @@ usersRouter.route('/certainFields')
     res.json({ users });
   });
 
-// get age range 
-usersRouter.route('/whereIn')
-  .get(async (req, res) => {
-    const users = await knex.schema.raw
-      (`SELECT * FROM users WHERE age BETWEEN 34 and 45`)
-    res.json({ users: users.rows });
-  })
 
 // get all users
 usersRouter.route('/users')
@@ -69,5 +62,27 @@ usersRouter.route('/where')
       .where(req.query)
     res.json({ users });
   });
+
+// checks if age matches any other value in the database
+// https://localhost:8000/whereIn?age=26&age=45
+usersRouter.route('/whereIn')
+  .get(async (req, res) => {
+    const {age} = req.query;
+    const users = await knex('users')
+      .whereIn('age', age);
+    res.json({ users });
+  });
+
+// fetch age range
+// https://localhost:8000/whereIn?age=26&age=45
+usersRouter.route('/whereBetween')
+  .get(async (req, res) => {
+    const {age} = req.query;
+    const users = await knex('users')
+      .whereBetween('age', age)
+    res.json({ users });
+  });
+
+
 
 module.exports = usersRouter;
