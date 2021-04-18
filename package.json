@@ -1,0 +1,17 @@
+{
+  "name": "express-knex-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "knex": "^0.95.4",
+    "nodemon": "^2.0.7",
+    "pg": "^8.6.0"
+  }
+}
