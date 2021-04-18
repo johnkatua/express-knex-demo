@@ -61,4 +61,13 @@ usersRouter.route('/orderBy/:column/:order')
     res.json({ users })
   });
 
+// fetch data using condition where
+usersRouter.route('/where')
+  .get(async (req, res) => {
+    const users = await knex('users')
+      .select('first_name', 'last_name')
+      .where(req.query)
+    res.json({ users });
+  });
+
 module.exports = usersRouter;
